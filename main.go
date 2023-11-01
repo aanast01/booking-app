@@ -15,7 +15,7 @@ func main() {
 	for remainingTickets > 0 {
 		// Print welcome message
 		fmt.Printf("Welcome to %v booking application\n", conferenceName)
-		fmt.Printf("We have a total of %v tickets and %v are available\n", conferenceTickets, remainingTickets)
+		fmt.Printf("We have %v remaining tickets\n", remainingTickets)
 		fmt.Println("Get your tickets here to attend")
 
 		var firstName string
@@ -24,21 +24,44 @@ func main() {
 		var userTickets uint
 
 		// ask user for their name
-		fmt.Println("Enter your first name: ")
-		fmt.Scan(&firstName)
+		var isValidName = false
+		for !isValidName {
+			fmt.Println("Enter your first name: ")
+			fmt.Scan(&firstName)
+			isValidName = len(firstName) >= 2
+			if !isValidName {
+				fmt.Printf("Invalid first name. First name must be at least 2 characters\n")
+			}
+		}
 
-		fmt.Println("Enter your last name: ")
-		fmt.Scan(&lastName)
+		isValidName = false
+		for !isValidName {
+			fmt.Println("Enter your last name: ")
+			fmt.Scan(&lastName)
+			isValidName = len(lastName) >= 2
+			if !isValidName {
+				fmt.Printf("Invalid last name. Last name must be at least 2 characters\n")
+			}
+		}
 
-		fmt.Println("Enter your email: ")
-		fmt.Scan(&email)
+		var isValidEmail = false
+		for !isValidName {
+			fmt.Println("Enter your email: ")
+			fmt.Scan(&email)
+			isValidEmail = strings.Contains(email, "@")
+			if !isValidEmail {
+				fmt.Printf("Invalid email. Email must contain the @ character\n")
+			}
+		}
 
-		fmt.Println("Enter how many tickets you want: ")
-		fmt.Scan(&userTickets)
-
-		if userTickets > remainingTickets {
-			fmt.Printf("Sorry there only %v available tickets\n\n", remainingTickets)
-			continue
+		var isValidTicketNumber = false
+		for !isValidTicketNumber {
+			fmt.Println("Enter how many tickets you want: ")
+			fmt.Scan(&userTickets)
+			isValidTicketNumber = userTickets > 0 && userTickets < remainingTickets
+			if !isValidTicketNumber {
+				fmt.Printf("Invalid number of tickets. Ticket number must be between 1 and %v\n", remainingTickets)
+			}
 		}
 
 		bookings_names = append(bookings_names, firstName+" "+lastName)
